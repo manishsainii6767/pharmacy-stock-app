@@ -1,0 +1,20 @@
+{
+  "name": "pharmacy-stock-app",
+  "version": "1.0.0",
+  "description": "Pharmacy inventory system with FEFO (First-Expiry-First-Out) dispensing",
+  "main": "server.js",
+  "engines": { "node": ">=22.5.0" },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node scripts/seed.js"
+  },
+  "keywords": ["pharmacy", "inventory", "fefo"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3"
+  }
+}

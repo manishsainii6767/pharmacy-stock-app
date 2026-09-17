@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log in — Sellwell</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="brand">Sell<span>well</span></a>
+  <div class="nav-links"><a href="register.html">Need an account?</a></div>
+</div>
+
+<div class="auth-shell">
+  <h2>Log in</h2>
+  <p>Access your pharmacy's inventory dashboard.</p>
+  <div class="card">
+    <form id="loginForm">
+      <label for="email">Email</label>
+      <input type="email" id="email" required>
+      <label for="password">Password</label>
+      <input type="password" id="password" required>
+      <button type="submit" class="btn btn-primary" style="width:100%;margin-top:18px">Log in</button>
+      <div class="error-msg" id="msg"></div>
+    </form>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script>
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const msg = document.getElementById('msg');
+  msg.textContent = '';
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Login failed.');
+    saveSession(data.token, data.user);
+    window.location.href = 'dashboard.html';
+  } catch (err) {
+    msg.textContent = err.message;
+  }
+});
+</script>
+</body>
+</html>
